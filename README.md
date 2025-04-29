@@ -1,52 +1,242 @@
-# Advance-Mapper-Algorithm
-# Topological Data Analysis Toolkit
+# Topological Analysis of High-Dimensional Data Structures
 
 ## Overview
-This repository provides tools for topological analysis of both correlation matrices and experimental 3D point cloud data. The toolkit includes:
 
-1. **Correlation Matrix Analysis**: Processes correlation matrices to extract topological features
-2. **Experimental Data Analysis**: Analyzes 3D point clouds (including synthetic shapes like torus)
+This repository provides a unified framework for **Topological Data Analysis (TDA)** of high-dimensional datasets. It supports two core implementations:
 
-Key features include persistent homology calculations, Vietoris-Rips complex construction, and mapper graph visualization.
+1. **Correlation Matrix Analysis** — for network/biological data  
+2. **Geometric Structure Analysis** — for point cloud data such as tori or manifolds
 
-## Features
-- **For Correlation Matrices**:
-  - Converts correlation matrices to distance matrices
-  - Computes persistent homology using Ripser
-  - Visualizes persistence diagrams and Betti curves
-  - Implements Mapper algorithm with UMAP projections
+The toolkit utilizes **persistent homology**, **Vietoris-Rips complexes**, and the **mapper algorithm** to extract, quantify, and visualize topological features of complex datasets.
 
-- **For Experimental Data**:
-  - Processes 3D point clouds (including synthetic shapes)
-  - Normalizes and samples data
-  - Constructs Vietoris-Rips complexes
-  - Analyzes topological features through Betti numbers
-  - Provides 3D visualizations
+---
 
-- **Common Features**:
-  - Interactive visualizations of simplicial complexes
-  - Automatic parameter optimization
-  - Topological consistency validation
+## 🔧 Features
 
-## Requirements
+- **Persistent Homology Analysis**:
+  - Vietoris-Rips filtration using Ripser and GUDHI
+  - Compute persistence diagrams and Betti curves
+  - Automatic scale selection and thresholding
+
+- **Mapper Graph Construction**:
+  - UMAP-based filtering and DBSCAN clustering
+  - Interactive mapper graphs from high-dimensional data
+  - Validation via Betti number comparison
+
+- **Geometric and Network Data Compatibility**:
+  - Works on both correlation matrices and geometric point clouds
+  - Modular functions for reuse and adaptation
+
+---
+
+## 📐 Mathematical Foundations
+
+### 1. Persistent Homology
+
+Given a point cloud $X = \{x_1, ..., x_n\} \subset \mathbb{R}^d$:
+
+- **Vietoris–Rips Complex** at scale $t$:
+  $$
+  K_t = \left\{ \sigma \subseteq X \mid \text{diam}(\sigma) \leq t \right\}, \quad \text{diam}(\sigma) = \max_{x,y \in \sigma} d(x,y)
+  $$
+
+- **Persistence Diagram**:
+  Tracks birth-death pairs of homological features $H_k(K_t)$:
+  $$
+  H_k(K_t) = \bigoplus_i \mathbb{F}^{(b_i,d_i]}, \quad \beta_k(t) = \text{rank}(H_k(K_t))
+  $$
+
+### 2. Mapper Graphs
+
+Given a filter function $f: X \to \mathbb{R}^d$:
+
+- **Cover**:
+  $$
+  \mathcal{U} = \{U_i\}_{i=1}^N \text{ where } \bigcup_i U_i \supseteq f(X)
+  $$
+
+- **Clustering in Pullbacks**:
+  $$
+  C_{i,j} = \text{connected components}(f^{-1}(U_i)) \quad \text{(e.g., via DBSCAN)}
+  $$
+
+- **Graph Construction**:
+  Vertices represent clusters; edges are shared points:
+  $$
+  (C_{i,j}, C_{k,l}) \in E \iff C_{i,j} \cap C_{k,l} \neq \emptyset
+  $$
+
+
+
+## 📦 Installation
+
+### Requirements
+
 - Python 3.7+
-- Required packages:  ``` pandas, numpy, matplotlib, scipy, networkx, ripser, umap-learn, gudhi, scikit-learn, gtda (giotto-tda), mpl_toolkits```
+- Required packages:
+  ```
+  numpy
+  pandas
+  matplotlib
+  scipy
+  networkx
+  ripser
+  umap-learn
+  gudhi
+  scikit-learn
+  gtda
+  ```
 
+### Install
 
-## Installation
 ```bash
-git clone https://github.com/Naseemza/Advance-Mapper-Algorithm.git
-cd tda-toolkit
+git clone https://github.com/yourusername/topological-analysis.git
+cd topological-analysis
 pip install -r requirements.txt
 ```
 
+---
 
+## 🚀 Usage
 
+### 1. Correlation Matrix Analysis
 
+```python
+from analysis import process_correlation_matrix
+import pandas as pd
 
+corr_matrix = pd.read_csv("your_matrix.csv", index_col=0)
+results = process_correlation_matrix(corr_matrix, k=1, cutoff_betti=4)
+```
 
+### 2. Geometric Point Cloud (e.g., Torus)
 
+```python
+from analysis import process_geometric_structure, generate_torus_points
 
+xyz_points = generate_torus_points(n_points=5000)
+results = process_geometric_structure(xyz_points, k=0.25, cutoff_betti=2)
+```
+
+---
+
+## 📊 Methodology
+
+### Pipeline
+
+1. **Preprocessing**
+   - Normalize data
+   - Compute distance or correlation matrices
+   - Apply dimensionality reduction (UMAP)
+
+2. **Persistent Homology**
+   - Vietoris-Rips filtration
+   - Compute persistence diagrams $(b_i, d_i)$
+   - Calculate Betti curves $\beta_k(t)$
+
+3. **Mapper Graph Construction**
+   - Cover filter space with overlapping intervals
+   - Cluster in preimages of covers
+   - Construct graph with overlapping clusters
+
+4. **Parameter Optimization**
+   - Optimal filtration scale:
+     $$
+     \epsilon^* = \arg\max_{\epsilon} \left( \sum_{(b,d)} \mathbb{I}_{[b,d]}(\epsilon) \right)
+     $$
+   - Number of intervals:
+     $$
+     N(\epsilon, \alpha) = \left\lfloor \frac{L - \epsilon}{\epsilon(1 - \alpha / 100)} \right\rfloor + 1
+     $$
+
+5. **Validation**
+   - Betti number agreement:
+     $$
+     |\beta_1^{\text{persistence}} - \beta_1^{\text{mapper}}| \leq \tau
+     $$
+
+---
+
+## 🌐 Example: Torus Geometry
+
+### Torus Parametrization
+
+```python
+def torus(u, v, R=3, r=1):
+    x = (R + r * np.cos(v)) * np.cos(u)
+    y = (R + r * np.cos(v)) * np.sin(u)
+    z = r * np.sin(v)
+    return np.column_stack((x, y, z))
+```
+
+### Expected Topology
+
+- $\beta_0 = 1$ — 1 connected component  
+- $\beta_1 = 2$ — 2 independent loops  
+- $\beta_2 = 1$ — void enclosed by the torus
+
+---
+
+## 📈 Output
+
+### Example Table
+
+| %overlap | N value | Betti_1_1 | Betti_1_2 | epsilon_1 | epsilon_2 |
+|----------|---------|-----------|-----------|-----------|-----------|
+|   20     |   15    |     2     |     1     |  0.4521   |  0.3876   |
+|   25     |   18    |     2     |     2     |  0.4521   |  0.4213   |
+
+### Visual Outputs
+
+#### Biological Data
+- `images/bio_persistence.png`  
+- `images/bio_mapper.png`
+
+#### Torus Data
+- `images/torus_3d.png`  
+- `images/torus_persistence.png`
+
+---
+
+## 📚 References
+
+1. Edelsbrunner, H., & Harer, J. (2010). *Computational Topology*  
+2. Carlsson, G. (2009). *Topology and Data*  
+3. Singh, G., et al. (2007). *Topological Methods for the Analysis of High Dimensional Data*  
+4. McInnes, L., et al. (2018). *UMAP*  
+5. Chazal, F., & Michel, B. (2017). *Introduction to TDA*
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please fork the repo, create a branch, and submit a pull request.  
+Bug reports and feature requests via [issues](https://github.com/yourusername/topological-analysis/issues) are appreciated.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 📬 Contact
+
+**Your Name**  
+[Your Email]  
+[Your Institution]
+```
+
+---
+
+### ✅ Next Steps:
+
+1. Save the content above as `README.md` in your project root directory.
+2. Replace `yourusername`, `Your Name`, `Your Email`, and `Your Institution` with your actual details.
+3. Ensure that referenced image files (e.g., `images/bio_persistence.png`) exist in the `images/` folder in your repo.
+
+Would you like help generating a matching `requirements.txt` or an example Jupyter notebook to go with this?
 
 
 
