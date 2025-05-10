@@ -119,20 +119,47 @@ k = 0.99  # Example value for k
 cutoff_betti = 4  # Example cutoff Betti value
 results_df_protein = process_correlation_matrix(corr_matrix_path, k, cutoff_betti)
 ```
+Step 3 : All the process will automatically load but to see the final result we can use the following code and run it to get the final table result.
+``` python
+print(results_df_protein)
+````
 
 
 
+### 2. Geometric Point Cloud (any 2D or 3D dataset)
+### 1. Correlation Matrix Analysis
+#### Case 1 : Using Jupyter NoteBook
+Step 1 : Import the `Coordinate.ipnb` file in Jupyter Notebook.
 
-### 2. Geometric Point Cloud (e.g., Torus)
+Step 2 : Run the First line od codes to load all the data and wait for it to finish.
+
+Step 3 : Upload your coordinate.csv file or load any random 2D & 3D sample and then Use the code :
+```python
+xyz_points = xyz_points_normalized # load the point cloud data
+k = 0.25  # Example value for k
+cutoff_betti = 1 # Example cutoff Betti value
+results_df_torus = process_structural_data(xyz_points, k, cutoff_betti)
+```
+Step 4 : All the process will automatically load but to see the final result we can use the following code and run it to get the final table result.
+``` python
+results_df_torus
+````
+
+#### Case 2 : Using Python programmer
+Step 1 : Open the Python compiler and copy the whole code from `Step1_Coordinate_data.py` from PythonCode folder in our github.
+
+Step 2 : Then copy the `Step2_loading_running_code.py` by changing the correlation matrix that you want to upload and follow other code and run the file similar code give below :
 
 ```python
-from analysis import process_geometric_structure, generate_torus_points
-
-xyz_points = generate_torus_points(n_points=5000)
-results = process_geometric_structure(xyz_points, k=0.25, cutoff_betti=2)
+corr_matrix_path = "torsion_correlation.csv" # paste the link for your correlation.csv file
+k = 0.99  # Example value for k
+cutoff_betti = 4  # Example cutoff Betti value
+results_df_protein = process_correlation_matrix(corr_matrix_path, k, cutoff_betti)
 ```
-
----
+Step 3 : All the process will automatically load but to see the final result we can use the following code and run it to get the final table result.
+``` python
+print(results_df_torus)
+````
 
 ## 📊 Methodology
 
@@ -171,25 +198,6 @@ results = process_geometric_structure(xyz_points, k=0.25, cutoff_betti=2)
 
 ---
 
-## 🌐 Example: Torus Geometry
-
-### Torus Parametrization
-
-```python
-def torus(u, v, R=3, r=1):
-    x = (R + r * np.cos(v)) * np.cos(u)
-    y = (R + r * np.cos(v)) * np.sin(u)
-    z = r * np.sin(v)
-    return np.column_stack((x, y, z))
-```
-
-### Expected Topology
-
-- $\beta_0 = 1$ — 1 connected component  
-- $\beta_1 = 2$ — 2 independent loops  
-- $\beta_2 = 1$ — void enclosed by the torus
-
----
 
 ## 📈 Output
 
@@ -201,70 +209,21 @@ def torus(u, v, R=3, r=1):
 |   25     |   18    |     2     |     2     |  0.4521   |  0.4213   |
 
 ### Visual Outputs
-
-#### Biological Data
-- `images/bio_persistence.png`  
-- `images/bio_mapper.png`
-
-#### Torus Data
-- `images/torus_3d.png`  
-- `images/torus_persistence.png`
+1. Persistence Diagram of the data
+2. Betti curve
+3. Mapper Nerve (Graph)
+4. Simplicial Complex.
 
 ---
 
 ## 📚 References
 
-1. Edelsbrunner, H., & Harer, J. (2010). *Computational Topology*  
-2. Carlsson, G. (2009). *Topology and Data*  
-3. Singh, G., et al. (2007). *Topological Methods for the Analysis of High Dimensional Data*  
-4. McInnes, L., et al. (2018). *UMAP*  
-5. Chazal, F., & Michel, B. (2017). *Introduction to TDA*
+1. Bauer, U. (2021). Ripser: efficient computation of Vietoris–Rips persistence barcodes. Journal of Applied and Computational Topology, 5(3), 391-423.
+2. Saul, Nathaniel and Tralie, Chris. (2019). Scikit-TDA: Topological Data Analysis for Python. Zenodo.
+3. Tauzin, G., Lupo, U., Tunstall, L., Pérez, J. B., Caorsi, M., Medina-Mardones, A. M., ... & Hess, K. (2021). giotto-tda:: A topological data analysis toolkit for machine learning and data exploration. Journal of Machine Learning Research, 22(39), 1-6.
+4. Maria, C., Boissonnat, J. D., Glisse, M., & Yvinec, M. (2014). The gudhi library: Simplicial complexes and persistent homology. In Mathematical Software–ICMS 2014: 4th International Congress, Seoul, South Korea, August 5-9, 2014. Proceedings 4 (pp. 167-174). Springer Berlin Heidelberg.
+5. Caorsi, M., Reinauer, R., & Berkouk, N. (2022). giotto-deep: A python package for topological deep learning. Journal of Open Source Software, 7(79).
+
 
 ---
-
-## 🤝 Contributing
-
-Contributions welcome! Please fork the repo, create a branch, and submit a pull request.  
-Bug reports and feature requests via [issues](https://github.com/yourusername/topological-analysis/issues) are appreciated.
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📬 Contact
-
-**Your Name**  
-[Your Email]  
-[Your Institution]
-```
-
----
-
-### ✅ Next Steps:
-
-1. Save the content above as `README.md` in your project root directory.
-2. Replace `yourusername`, `Your Name`, `Your Email`, and `Your Institution` with your actual details.
-3. Ensure that referenced image files (e.g., `images/bio_persistence.png`) exist in the `images/` folder in your repo.
-
-Would you like help generating a matching `requirements.txt` or an example Jupyter notebook to go with this?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
