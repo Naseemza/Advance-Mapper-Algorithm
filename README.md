@@ -87,27 +87,41 @@ Given a filter function $f: X \to \mathbb{R}^d$:
   gtda
   ```
 
-### Install
-
-```bash
-git clone https://github.com/yourusername/topological-analysis.git
-cd topological-analysis
-pip install -r requirements.txt
-```
-
----
-
-## 🚀 Usage
+## 🚀 How to Usage
 
 ### 1. Correlation Matrix Analysis
+#### Case 1 : Using Jupyter NoteBook
+Step 1 : Import the `Correlation.ipnb` file in Jupyter Notebook.
+
+Step 2 : Run the First line od codes to load all the data and wait for it to finish.
+
+Step 3 : Upload your correlation.csv file and then Use the code :
+```python
+corr_matrix_path = "torsion_correlation.csv" # paste the link for your correlation.csv file
+k = 0.99  # Example value for k
+cutoff_betti = 4  # Example cutoff Betti value
+results_df_protein = process_correlation_matrix(corr_matrix_path, k, cutoff_betti)
+```
+Step 4 : All the process will automatically load but to see the final result we can use the following code and run it to get the final table result.
+``` python
+results_df_protein
+````
+
+
+#### Case 2 : Using Python programmer
+Step 1 : Open the Python compiler and copy the whole code from `correlation_matrix.py` from PythonCode folder in our github.
+
+Step 2 : Then copy the `Exapmle_correlation_compiler.py` by changing the correlation matrix that you want to upload and follow other code and run the file similar code give below :
 
 ```python
-from analysis import process_correlation_matrix
-import pandas as pd
-
-corr_matrix = pd.read_csv("your_matrix.csv", index_col=0)
-results = process_correlation_matrix(corr_matrix, k=1, cutoff_betti=4)
+corr_matrix_path = "torsion_correlation.csv" # paste the link for your correlation.csv file
+k = 0.99  # Example value for k
+cutoff_betti = 4  # Example cutoff Betti value
+results_df_protein = process_correlation_matrix(corr_matrix_path, k, cutoff_betti)
 ```
+
+
+
 
 ### 2. Geometric Point Cloud (e.g., Torus)
 
