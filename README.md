@@ -216,6 +216,54 @@ print(results_df_torus)
 
 ---
 
+The algorithm follows these steps:
+
+1. **Import Data**: Load either a correlation matrix or coordinate data.
+2. **Preprocess**:
+   - If using a correlation matrix, convert it to a distance matrix.
+   - If using coordinates, proceed directly.
+3. **Persistent Homology**: Use the `ripser` package to compute persistent homology and plot the persistence diagram.
+4. **Betti Curve**: Track the evolution of Betti-1 features over a range of filtration radii.
+5. **Interval Partitioning**: Identify intervals where Betti-1 = 1 and compute their lifespans.
+6. **Noise Reduction**: Retain only the top 20% longest intervals to reduce redundant noise.
+7. **Persistence Extraction**: Select the longest interval and define:
+   - **K\***: Most persistent Betti-1 range
+   - **ε (epsilon)**: Mean of maximum and minimum lifespans
+8. **Output**: Print the (K\*, ε) pair for further use.
+---
+
+## 🚀 How to Use Most Persistent Mapper Algorithm
+
+Step 1 , Step 2, Step 3 are same as the above code for loading the data and running the code 
+
+Step 4 : we can now seperately run the code for finding the most persistent betti 1 characher using the follow code:
+Case 1 : For geometrical and manifold data
+```python
+xyz_points = xyz_points_normalized
+most_persistenet_structural(xyz_points)
+```
+Case 2 : For correlation matrix
+```python
+corr_matrix_path = "clinical_corr_2.csv"
+most_persistenet_corr(corr_matrix_path)
+```
+
+## Seperate code using most perisstent algorithm is give in Moest_Persistent folder with jupyter notebook file.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 📚 References
 
 1. Bauer, U. (2021). Ripser: efficient computation of Vietoris–Rips persistence barcodes. Journal of Applied and Computational Topology, 5(3), 391-423.
