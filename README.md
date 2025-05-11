@@ -216,6 +216,19 @@ print(results_df_torus)
 
 ---
 
+# Most Persistent Betti-1 Calculator
+
+This repository provides a Python implementation for identifying the **most persistent Betti-1** feature in topological data using persistent homology via the `ripser` library.
+
+The code supports input in the form of:
+- A **correlation matrix** (converted to a distance matrix), or
+- **Coordinate data** (Euclidean space).
+
+---
+
+## 📊 Methodology
+
+
 The algorithm follows these steps:
 
 1. **Import Data**: Load either a correlation matrix or coordinate data.
