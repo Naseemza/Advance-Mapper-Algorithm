@@ -72,6 +72,7 @@ Given a filter function $f: X \to \mathbb{R}^d$:
 
 ### Requirements
 
+- Operatin System : Windows OS
 - Python 3.7+
 - Required packages:
   ```
@@ -86,6 +87,32 @@ Given a filter function $f: X \to \mathbb{R}^d$:
   scikit-learn
   gtda
   ```
+
+- You can install the required Python packages individually using pip:
+  ```python
+  # Core libraries
+  pip install pandas
+  pip install numpy
+
+  # TDA and topology tools
+  pip install ripser
+  pip install gudhi
+  pip install giotto-tda
+
+  # Dimensionality reduction
+  pip install umap-learn
+
+  # Clustering and distance tools
+  pip install scikit-learn
+  pip install scipy
+
+  # Graph and network tools
+  pip install networkx
+
+  # Visualization
+  pip install matplotlib
+  ```
+
 
 ## 🚀 How to Usage
 
