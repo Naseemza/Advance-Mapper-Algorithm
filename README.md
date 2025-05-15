@@ -73,7 +73,7 @@ Given a filter function $f: X \to \mathbb{R}^d$:
 ### Requirements
 
 - Operatin System : Windows OS
-- Python 3.7+
+- Python 3.9.21
 - Required packages:
   ```
   numpy
@@ -90,27 +90,17 @@ Given a filter function $f: X \to \mathbb{R}^d$:
 
 - You can install the required Python packages individually using pip:
   ```python
-  # Core libraries
-  pip install pandas
-  pip install numpy
+  pip install pandas==1.4.2
+  pip install numpy==1.21.6
+  pip install ripser==0.6.10
+  pip install matplotlib==3.5.1
+  pip install umap-learn==0.3.10
+  pip install networkx==2.7.1
+  pip install gudhi==3.5.0
+  pip install giotto-tda==20220825.5
+  pip install scikit-learn==1.3.2
+  pip install scipy==1.10.1
 
-  # TDA and topology tools
-  pip install ripser
-  pip install gudhi
-  pip install giotto-tda
-
-  # Dimensionality reduction
-  pip install umap-learn
-
-  # Clustering and distance tools
-  pip install scikit-learn
-  pip install scipy
-
-  # Graph and network tools
-  pip install networkx
-
-  # Visualization
-  pip install matplotlib
   ```
 
 
