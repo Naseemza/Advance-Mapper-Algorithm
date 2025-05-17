@@ -97,9 +97,10 @@ Given a filter function $f: X \to \mathbb{R}^d$:
   pip install umap-learn==0.3.10
   pip install networkx==2.7.1
   pip install gudhi==3.5.0
-  pip install giotto-tda==20220825.5
+  pip install giotto-tda==0.6.2
   pip install scikit-learn==1.3.2
   pip install scipy==1.10.1
+  pip install plotly==4.8.2
 
   ```
 
